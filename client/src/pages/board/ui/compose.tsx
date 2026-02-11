@@ -1,4 +1,4 @@
-import { Container, Flex } from "@mantine/core";
+import { AppShell, Burger, Container, Flex } from "@mantine/core";
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react-lite";
@@ -98,18 +98,52 @@ function KanbanBoard(props: KanbanBoardProps)
     },[]);
 
     return(
-        <Container strategy="grid" size={500}>
-            <Flex gap={15}>
-                <Text>Hello</Text>
-                {store.Columns.map(x => <Column>{x.tasks.map(t => <Demo title={t.title} description={t.description}></Demo>)}</Column>)}
-            </Flex>
-        </Container>
+        <AppShell
+        padding="md"
+        header={{ height: 60 }}
+        navbar={{
+            width: 300,
+            breakpoint: 'sm',
+        }}
+        >
+            <AppShell.Header>
+                <Flex justify={"space-between"} p={10}> 
+                    <Text>Тестовая доска 1</Text>
+                    <Flex direction={"row"} gap={25}>
+                        <Flex gap={5}>
+                            <div style={{backgroundColor: "black", color: "white", width: "200px"}}> <span>Фильтры 1</span> </div>
+                            <Button>Найти</Button>
+                        </Flex>
+                        
+                        <Button>Архивировать доску</Button>
+                    </Flex>
+                </Flex>
+                
+            </AppShell.Header>
+
+            <AppShell.Navbar>
+                <Flex direction={"column"} gap={10}>
+                    <Button>Создать новую доску</Button>
+                    <Text>Тестовая доска 1</Text>
+                    <Text>Тестовая доска 2</Text>
+                    <Text>Тестовая доска 3</Text>
+                </Flex>
+            </AppShell.Navbar>
+
+            <AppShell.Main>
+                <Container strategy="grid">
+                    <Flex gap={15}>
+                        {store.Columns.map(x => <Column>{x.tasks.map(t => <Demo title={t.title} description={t.description}></Demo>)}</Column>)}
+                    </Flex>
+                </Container>
+            </AppShell.Main>
+        </AppShell>
     )
 }
 
 function Column(props: {children: any}){
     return(
-        <Flex direction={"column"} gap={10} p={20} bg={"gray"} w={100}>
+        <Flex direction={"column"} gap={10} p={20} bg={"gray"} w={300}>
             {props.children}
         </Flex>
     )
